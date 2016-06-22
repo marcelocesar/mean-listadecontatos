@@ -1,0 +1,28 @@
+{
+  "name": "mean-listadecontatos",
+  "description": "App para gerenciar lista de contatos",
+  "main": "server.js",
+  "authors": [
+    "Marcelo Cesar <marcelop3@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "mean",
+    "node",
+    "express",
+    "angular"
+  ],
+  "homepage": "https://github.com/marcelocesar/mean-listadecontatos",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.7",
+    "angular-route": "^1.5.7",
+    "Materialize": "materialize#^0.97.6"
+  }
+}
