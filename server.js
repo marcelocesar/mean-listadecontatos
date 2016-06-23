@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 var db;
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect('mongodb://'$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/*'mongodb://localhost/contactlist'*/, function (err, database) {
+mongodb.MongoClient.connect('mongodb://'+ $OPENSHIFT_MONGODB_DB_HOST+':'+$OPENSHIFT_MONGODB_DB_PORT, function (err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -24,7 +24,7 @@ mongodb.MongoClient.connect('mongodb://'$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MO
   console.log("Database conectado!");
 
   // Initialize the app.
-  var server = app.listen($OPENSHIFT_MONGODB_DB_PORT /*process.env.PORT */ || 8080, function () {
+  var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log("App funcionando na porta", port);
   });
