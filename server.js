@@ -1,30 +1,34 @@
 var express = require("express");
-var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
-var ObjectID = mongodb.ObjectID;
 var CONTACTS_COLLECTION = "contacts";
 
 var app = express();
 app.use(express.static(__dirname + "/app"));
 app.use(bodyParser.json());
 
-// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
+var connection_host = 'localhost/contactlist';
+var connection_port = process.env.OPENSHIFT_MONGODB_DB_PORT || process.env.PORT || 8080;
 
-// Connect to the database before starting the application server.
-mongodb.MongoClient.connect('mongodb://'+ $OPENSHIFT_MONGODB_DB_HOST+':'+$OPENSHIFT_MONGODB_DB_PORT, function (err, database) {
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+  connection_host = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+    process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+    process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+    process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+    process.env.OPENSHIFT_APP_NAME;
+}
+
+mongodb.MongoClient.connect('mongodb://'+ connection_host, function (err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
   }
 
-  // Save database object from the callback for reuse.
   db = database;
-  console.log("Database conectado!");
+  console.log("Database conectado!\n", "Basename "+ db.s.databaseName);
 
-  // Initialize the app.
-  var server = app.listen(process.env.PORT || 8080, function () {
+  var server = app.listen(connection_port, function () {
     var port = server.address().port;
     console.log("App funcionando na porta", port);
   });
